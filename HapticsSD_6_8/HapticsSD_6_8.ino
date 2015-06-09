@@ -599,8 +599,13 @@ void letterData(int lett) {
         myFile.read();
         neg = -1; //this is to multiply final total to get negative
       }
+        
+       total = myFile.read() - zero; //This is the first number
+       
+       if (myFile.peek()!='.') {
+         total = (total * 10) + (myFile.read()-zero);
+       }
       
-      total = myFile.read() - zero; //This is the first number
       
       if(myFile.peek()!=',' || myFile.peek()!=13){
       myFile.read(); //jumping over period
