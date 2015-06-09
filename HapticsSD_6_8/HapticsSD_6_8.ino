@@ -502,7 +502,7 @@ else{
   Fx = voltage1x-voltage2x-voltage3x;
   Fy = voltage2y-voltage3y;
 
-//    func(letter);      // choose a number from 1-26 for letter.  <---- Moved to whenever the letter is selected
+//    letterData(letter);      // choose a number from 1-26 for letter.  <---- Moved to whenever the letter is selected
 
     //old stuff
     mc.findMotor_position(theta1, theta3, time, currtime);
@@ -564,7 +564,7 @@ delay(1);
 
 }
 
-void func(int lett) {
+void letterData(int lett) {
   
   
   for( int p = 0; p < sizeof(time);  p++ ) {
@@ -602,7 +602,7 @@ void func(int lett) {
       
       total = myFile.read() - zero; //This is the first number
       
-      if(myFile.peek()!=','){
+      if(myFile.peek()!=',' || myFile.peek()!=13){
       myFile.read(); //jumping over period
       counter = 1;
       
@@ -637,7 +637,6 @@ void func(int lett) {
         Serial.println(ktheta3[i],5);
       }
       if(myFile.peek() == 13){ //If next character is new line character
-        myFile.read();
         myFile.read();
         Serial.println();
         Serial.println();
@@ -783,7 +782,7 @@ void menuChanged(MenuChangeEvent changed){
       level = '5';
 //      Serial.begin(115200);
 //      Serial.print(digitalRead(7));
-//      func(letter);      // choose a number from 1-26 for letter. COMMENTED BY AAB 6/8/2015
+//      letterData(letter);      // choose a number from 1-26 for letter. COMMENTED BY AAB 6/8/2015
       
   }
 }
@@ -798,7 +797,7 @@ void menuUsed(MenuUseEvent used){
   char stuff[3]= {var,level,'\0'};
   Serial.println(stuff);
   lcd.print(stuff);
-  func(letter);      // choose a number from 1-26 for letter. Moved here by AAB 6/8/2015
+  letterData(letter);      // choose a number from 1-26 for letter. Moved here by AAB 6/8/2015
   delay(5000);  //delay to allow message reading
   start_time = millis()/1000.0;//added by AAB 6/8/2015 to reset trial time.
   lcd.setCursor(0,0);  
