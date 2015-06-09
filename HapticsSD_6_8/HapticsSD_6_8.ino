@@ -603,7 +603,7 @@ void func(int lett) {
        total = myFile.read() - zero; //This is the first number
        
        if (myFile.peek()!='.') {
-         total = (total * 10) + (myFile.read()-zero);
+         total = (total * 10) + (myFile.read()-zero); //accounts for any data that increases to 10 and up to 99
        }
       
       
@@ -647,7 +647,6 @@ void func(int lett) {
         Serial.println(ktheta3[i],5);
       }
       if(myFile.peek() == 13){ //If next character is new line character
-        myFile.read();
         myFile.read();
         Serial.println();
         Serial.println();
