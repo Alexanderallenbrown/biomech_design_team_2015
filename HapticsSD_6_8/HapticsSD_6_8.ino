@@ -593,22 +593,22 @@ void func(int lett) {
 //    Serial.println("test.txt:");
 
     // read from the file until there's nothing else in it:
-    while (myFile.available()) {
+    while (myFile.available()&&type<5) {
       
-      if(myFile.peek()=='-'){ //if next is a negative
+      if(myFile.peek()=='-'){ //if     next is a negative
         myFile.read();
         neg = -1; //this is to multiply final total to get negative
       }
         
        total = myFile.read() - zero; //This is the first number
        
-       if (myFile.peek()!='.') {
+       if (myFile.peek()!='.' && myFile.peek()!=13 && myFile.peek()!=10) {
          total = (total * 10) + (myFile.read()-zero); //accounts for any data that increases to 10 and up to 99
        }
       
       
-      if(myFile.peek()!=','){
-      myFile.read(); //jumping over period
+      if(myFile.peek()!=','&&myFile.peek()!=13&&myFile.peek()!=10){
+      myFile.read(); //jumping over comma
       counter = 1;
       
       total = addTotal(total,counter);
@@ -618,49 +618,56 @@ void func(int lett) {
       //Serial.println(total,5); //print calculated value
       
       i++;
-      myFile.read();
-      
-      //Serial.println(type);
-      if(type == 0){
-        time[i] = total;
-        Serial.print("t: ");
-        Serial.println(time[i],5);
-      }
-      if(type == 1){
-        theta1[i] = total;
-        Serial.print("t1: ");
-        Serial.println(theta1[i],5);
-      }
-      if(type == 2){
-        theta3[i] = total;
-        Serial.print("t3: ");
-        Serial.println(theta3[i],5);
-      }
-      if(type == 3){
-        ktheta1[i] = total;
-        Serial.print("kt1: ");
-        Serial.println(ktheta1[i],5);
-      }
-      if(type == 4){
-        ktheta3[i] = total;
-        Serial.print("kt3: ");
-        Serial.println(ktheta3[i],5);
-      }
-      if(myFile.peek() == 13){ //If next character is new line character
+      //Serial.print(myFile.peek());
+      if(myFile.peek() == 13 || myFile.peek()==10){ //If next character is new line character
         myFile.read();
+        //myFile.read();
         Serial.println();
         Serial.println();
         Serial.println();
         type++; //advance the type of variable
+        Serial.print("Changing type to: ");
+        Serial.println(type);
         i = 0; // reset iterative counter
       }
+      else{
+        myFile.read();//why is this read here? 
+      }
+      
+      //Serial.println(type);
+      if(type == 0){
+        time[i] = total;
+        //Serial.print("t: ");
+        Serial.println(time[i],5);
+      }
+      if(type == 1){
+        theta1[i] = total;
+        //Serial.print("t1: ");
+        Serial.println(theta1[i],5);
+      }
+      if(type == 2){
+        theta3[i] = total;
+        //Serial.print("t3: ");
+        Serial.println(theta3[i],5);
+      }
+      if(type == 3){
+        ktheta1[i] = total;
+        //Serial.print("kt1: ");
+        Serial.println(ktheta1[i],5);
+      }
+      if(type == 4){
+        ktheta3[i] = total;
+        //Serial.print("kt3: ");
+        Serial.println(ktheta3[i],5);
+      }
+
       
       
     }
     
     Serial.println("apparently read the letter");
-
     myFile.close();
+    type=0;
   } else {
     // if the file didn't open, print an error:
     Serial.println("error opening txt file");
@@ -674,7 +681,7 @@ float addTotal(float total, int counter){
   
   counter++;
   
-  if(myFile.peek()!=','){
+  if(myFile.peek()!=',' && myFile.peek()!=13){
     addTotal(total,counter);
   }
   
