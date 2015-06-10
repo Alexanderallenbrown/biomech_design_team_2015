@@ -631,7 +631,7 @@ void func(int lett) {
         i = 0; // reset iterative counter
       }
       else{
-        myFile.read();//why is this read here? 
+        myFile.read();//why is this read here? <--this jumps over the period
       }
       
       //Serial.println(type);
